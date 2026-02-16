@@ -21,7 +21,7 @@ const MY_PHOTOS = [
 
   { file: "IMG_1603", title: "Cliff's Edge", category: "Algarve, Portugal", layout: "wide" },
   { file: "IMG_1233", title: "Pink Facade", category: "Lisbon, Portugal", layout: "tall" },
-  { file: "IMG_1074", title: "Night Strings", category: "Street", layout: "normal" },
+  { file: "IMG_1074", title: "Night Strings", category: "Street", layout: "tall" },
 
   { file: "IMG_1959", title: "Sea Arches", category: "Algarve, Portugal", layout: "wide" },
   { file: "IMG_1141", title: "Sentinel Post", category: "Algarve, Portugal", layout: "tall" },
@@ -29,14 +29,14 @@ const MY_PHOTOS = [
 
   { file: "IMG_0673", title: "Last Light on the Bay", category: "Portugal", layout: "wide" },
   { file: "IMG_1242", title: "Azulejo Heights", category: "Lisbon, Portugal", layout: "tall" },
-  { file: "IMG_1648", title: "Coastal Silhouette", category: "Algarve, Portugal", layout: "normal" },
+  { file: "IMG_1648", title: "Coastal Silhouette", category: "Algarve, Portugal", layout: "tall" },
 
   { file: "IMG_1676", title: "Alone at Golden Hour", category: "Algarve, Portugal", layout: "wide" },
   { file: "IMG_2956", title: "Hassan II Overlook", category: "Casablanca, Morocco", layout: "tall" },
-  { file: "IMG_0996", title: "Behind the Pass", category: "Street", layout: "normal" },
+  { file: "IMG_0996", title: "Behind the Pass", category: "Street", layout: "tall" },
 
   { file: "IMG_1800", title: "Dusk Roadside", category: "Algarve, Portugal", layout: "wide" },
-  { file: "IMG_1235", title: "City Stroll", category: "Street", layout: "normal" },
+  { file: "IMG_1235", title: "City Stroll", category: "Street", layout: "tall" },
 
   // ---- ADD YOUR PHOTOS ABOVE THIS LINE ----
 ];
@@ -64,8 +64,8 @@ const MY_PHOTOS = [
     figure.setAttribute('tabindex', '0');
     figure.setAttribute('role', 'button');
 
-    const imgW = photo.layout === 'tall' ? 600 : 800;
-    const imgH = photo.layout === 'tall' ? 800 : 533;
+    const imgW = photo.layout === 'tall' ? 800 : 800;
+    const imgH = photo.layout === 'tall' ? 1200 : 533;
 
     figure.innerHTML = `
       <picture>
