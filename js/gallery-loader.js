@@ -64,6 +64,9 @@ const MY_PHOTOS = [
     figure.setAttribute('tabindex', '0');
     figure.setAttribute('role', 'button');
 
+    const imgW = photo.layout === 'tall' ? 600 : 800;
+    const imgH = photo.layout === 'tall' ? 800 : 533;
+
     figure.innerHTML = `
       <picture>
         <source
@@ -74,8 +77,8 @@ const MY_PHOTOS = [
         <img
           src="${base}-800w.jpg"
           alt="${alt}"
-          width="800"
-          height="533"
+          width="${imgW}"
+          height="${imgH}"
           loading="lazy"
           decoding="async"
         >

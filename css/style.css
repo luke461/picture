@@ -409,21 +409,24 @@ button {
   cursor: pointer;
 }
 
-.gallery__item picture {
+.gallery__item picture,
+.gallery__item img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .gallery__item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   transition: transform var(--transition-slow);
 }
 
 .gallery__item--tall {
   aspect-ratio: 3 / 4;
+}
+
+.gallery__item--wide {
+  aspect-ratio: 16 / 9;
 }
 
 .gallery__item:hover img {
