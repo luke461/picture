@@ -51,7 +51,7 @@ const MY_PHOTOS = [
 
   MY_PHOTOS.forEach((photo) => {
     const base = `images/web/${photo.file}`;
-    const v = '?v=2';
+    const v = '?v=3';
     const alt = `${photo.title} — ${photo.category}`;
 
     const layoutClass = photo.layout === 'tall'
