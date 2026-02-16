@@ -51,6 +51,7 @@ const MY_PHOTOS = [
 
   MY_PHOTOS.forEach((photo) => {
     const base = `images/web/${photo.file}`;
+    const v = '?v=2';
     const alt = `${photo.title} — ${photo.category}`;
 
     const layoutClass = photo.layout === 'tall'
@@ -71,11 +72,11 @@ const MY_PHOTOS = [
       <picture>
         <source
           type="image/webp"
-          srcset="${base}-800w.webp 800w, ${base}-1200w.webp 1200w"
+          srcset="${base}-800w.webp${v} 800w, ${base}-1200w.webp${v} 1200w"
           sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
         >
         <img
-          src="${base}-800w.jpg"
+          src="${base}-800w.jpg${v}"
           alt="${alt}"
           width="${imgW}"
           height="${imgH}"
