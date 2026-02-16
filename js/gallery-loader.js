@@ -3,14 +3,15 @@
  *
  * HOW TO ADD PHOTOS:
  * 1. Put your images in the images/optimized/ folder
- * 2. Add them to the list below
- * 3. Refresh your browser — done!
+ * 2. Run the optimization script to generate web sizes
+ * 3. Add them to the list below
+ * 4. Refresh your browser — done!
  */
 
 const MY_PHOTOS = [
   // Copy this block for each photo and fill in your details:
   //
-  // { file: "your-photo.jpg", title: "Photo Title", category: "Landscape", layout: "normal" },
+  // { file: "your-photo", title: "Photo Title", category: "Landscape", layout: "normal" },
   //
   // layout options: "normal", "tall" (portrait), "wide" (landscape/panorama)
   //
@@ -18,24 +19,24 @@ const MY_PHOTOS = [
 
   // Ordered for visual flow: alternating layouts, mixing locations for rhythm
 
-  { file: "IMG_1603.JPG", title: "Cliff's Edge", category: "Algarve, Portugal", layout: "wide" },
-  { file: "IMG_1233.JPG", title: "Pink Facade", category: "Lisbon, Portugal", layout: "tall" },
-  { file: "IMG_1074.JPG", title: "Night Strings", category: "Street", layout: "normal" },
+  { file: "IMG_1603", title: "Cliff's Edge", category: "Algarve, Portugal", layout: "wide" },
+  { file: "IMG_1233", title: "Pink Facade", category: "Lisbon, Portugal", layout: "tall" },
+  { file: "IMG_1074", title: "Night Strings", category: "Street", layout: "normal" },
 
-  { file: "IMG_1959.JPG", title: "Sea Arches", category: "Algarve, Portugal", layout: "wide" },
-  { file: "IMG_1141.JPG", title: "Sentinel Post", category: "Algarve, Portugal", layout: "tall" },
-  { file: "IMG_0601.JPG", title: "Evening Swim", category: "Portugal", layout: "normal" },
+  { file: "IMG_1959", title: "Sea Arches", category: "Algarve, Portugal", layout: "wide" },
+  { file: "IMG_1141", title: "Sentinel Post", category: "Algarve, Portugal", layout: "tall" },
+  { file: "IMG_0601", title: "Evening Swim", category: "Portugal", layout: "normal" },
 
-  { file: "IMG_0673.JPG", title: "Last Light on the Bay", category: "Portugal", layout: "wide" },
-  { file: "IMG_1242.JPG", title: "Azulejo Heights", category: "Lisbon, Portugal", layout: "tall" },
-  { file: "IMG_1648.JPG", title: "Coastal Silhouette", category: "Algarve, Portugal", layout: "normal" },
+  { file: "IMG_0673", title: "Last Light on the Bay", category: "Portugal", layout: "wide" },
+  { file: "IMG_1242", title: "Azulejo Heights", category: "Lisbon, Portugal", layout: "tall" },
+  { file: "IMG_1648", title: "Coastal Silhouette", category: "Algarve, Portugal", layout: "normal" },
 
-  { file: "IMG_1676.JPG", title: "Alone at Golden Hour", category: "Algarve, Portugal", layout: "wide" },
-  { file: "IMG_2956.JPG", title: "Hassan II Overlook", category: "Casablanca, Morocco", layout: "tall" },
-  { file: "IMG_0996.JPG", title: "Behind the Pass", category: "Street", layout: "normal" },
+  { file: "IMG_1676", title: "Alone at Golden Hour", category: "Algarve, Portugal", layout: "wide" },
+  { file: "IMG_2956", title: "Hassan II Overlook", category: "Casablanca, Morocco", layout: "tall" },
+  { file: "IMG_0996", title: "Behind the Pass", category: "Street", layout: "normal" },
 
-  { file: "IMG_1800.JPG", title: "Dusk Roadside", category: "Algarve, Portugal", layout: "wide" },
-  { file: "IMG_1235.JPG", title: "City Stroll", category: "Street", layout: "normal" },
+  { file: "IMG_1800", title: "Dusk Roadside", category: "Algarve, Portugal", layout: "wide" },
+  { file: "IMG_1235", title: "City Stroll", category: "Street", layout: "normal" },
 
   // ---- ADD YOUR PHOTOS ABOVE THIS LINE ----
 ];
@@ -46,13 +47,11 @@ const MY_PHOTOS = [
   const grid = document.querySelector('.gallery__grid');
   if (!grid) return;
 
-  // Clear existing gallery items
   grid.innerHTML = '';
 
   MY_PHOTOS.forEach((photo) => {
-    const src = photo.file.startsWith('http')
-      ? photo.file
-      : `images/optimized/${photo.file}`;
+    const base = `images/web/${photo.file}`;
+    const alt = `${photo.title} — ${photo.category}`;
 
     const layoutClass = photo.layout === 'tall'
       ? ' gallery__item--tall'
@@ -66,13 +65,21 @@ const MY_PHOTOS = [
     figure.setAttribute('role', 'button');
 
     figure.innerHTML = `
-      <img
-        src="${src}"
-        alt="${photo.title} — ${photo.category}"
-        width="800"
-        height="800"
-        loading="lazy"
-      >
+      <picture>
+        <source
+          type="image/webp"
+          srcset="${base}-800w.webp 800w, ${base}-1200w.webp 1200w"
+          sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+        >
+        <img
+          src="${base}-800w.jpg"
+          alt="${alt}"
+          width="800"
+          height="533"
+          loading="lazy"
+          decoding="async"
+        >
+      </picture>
       <figcaption class="gallery__caption">
         <span class="gallery__caption-title">${photo.title}</span>
         <span class="gallery__caption-cat">${photo.category}</span>
@@ -82,6 +89,5 @@ const MY_PHOTOS = [
     grid.appendChild(figure);
   });
 
-  // Re-initialize fade-in observer and lightbox for new items
   window.dispatchEvent(new Event('galleryLoaded'));
 })();

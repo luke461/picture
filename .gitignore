@@ -17,5 +17,6 @@ Desktop.ini
 node_modules/
 package-lock.json
 
-# Original high-res images (too large for git)
+# Original and full-res images (too large for git)
 images/originals/
+images/optimized/

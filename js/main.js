@@ -1,5 +1,5 @@
 /**
- * Monaris — Photography Portfolio
+ * lukexcarter — Photography Portfolio
  * Main JavaScript
  */
 
@@ -21,9 +21,13 @@
     { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
 
-  document.querySelectorAll('.fade-in').forEach((el) => {
-    fadeObserver.observe(el);
-  });
+  const observeFadeIns = () => {
+    document.querySelectorAll('.fade-in:not(.visible)').forEach((el) => {
+      fadeObserver.observe(el);
+    });
+  };
+
+  observeFadeIns();
 
   // ========================================
   // Navbar — Background on scroll
@@ -54,7 +58,6 @@
       navLinks.classList.toggle('navbar__links--open');
     });
 
-    // Close menu when a link is clicked
     navLinks.querySelectorAll('.navbar__link').forEach((link) => {
       link.addEventListener('click', () => {
         toggle.setAttribute('aria-expanded', 'false');
@@ -88,7 +91,8 @@
   const lightboxClose = lightbox.querySelector('.lightbox__close');
 
   const openLightbox = (src, alt, title) => {
-    lightboxImg.src = src.replace('w=800', 'w=1600');
+    // Use 1200w version for lightbox
+    lightboxImg.src = src.replace('-800w.', '-1200w.').replace('.jpg', '.webp');
     lightboxImg.alt = alt;
     lightboxCaption.textContent = title;
     lightbox.classList.add('lightbox--open');
@@ -101,27 +105,37 @@
     lightbox.classList.remove('lightbox--open');
     lightbox.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    lightboxImg.src = '';
   };
 
-  // Gallery item click
-  document.querySelectorAll('.gallery__item').forEach((item) => {
-    item.setAttribute('tabindex', '0');
-    item.setAttribute('role', 'button');
+  const bindGalleryItems = () => {
+    document.querySelectorAll('.gallery__item').forEach((item) => {
+      if (item.dataset.lightboxBound) return;
+      item.dataset.lightboxBound = 'true';
 
-    const img = item.querySelector('img');
-    const title = item.querySelector('.gallery__caption-title');
+      const img = item.querySelector('img');
+      const title = item.querySelector('.gallery__caption-title');
 
-    const handleOpen = () => {
-      openLightbox(img.src, img.alt, title ? title.textContent : '');
-    };
+      const handleOpen = () => {
+        openLightbox(img.src, img.alt, title ? title.textContent : '');
+      };
 
-    item.addEventListener('click', handleOpen);
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleOpen();
-      }
+      item.addEventListener('click', handleOpen);
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleOpen();
+        }
+      });
     });
+  };
+
+  bindGalleryItems();
+
+  // Re-bind when gallery-loader finishes
+  window.addEventListener('galleryLoaded', () => {
+    observeFadeIns();
+    bindGalleryItems();
   });
 
   // Close lightbox
